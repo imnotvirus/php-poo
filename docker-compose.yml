@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  database-poo:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+
+  php-poo:
+    image: php:8.0-apache
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html/
+    environment:
+      PHP_DISPLAY_ERRORS: On
+      PHP_ERROR_REPORTING: E_ALL
+      PHP_MAX_EXECUTION_TIME: 300
+      PHP_MEMORY_LIMIT: 256M
+      PHP_POST_MAX_SIZE: 100M
+      PHP_UPLOAD_MAX_FILESIZE: 100M
+      PHP_EXTENSIONS: mysqli pdo_mysql curl
